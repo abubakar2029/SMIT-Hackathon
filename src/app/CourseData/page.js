@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
-function StudentsData() {
-  const [students, setStudents] = useState([]);
+function CourseData() {
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     fetchDocs();
@@ -12,54 +12,55 @@ function StudentsData() {
 
   const fetchDocs = async () => {
     try {
-      const collectionName = collection(db, 'students');
+      const collectionName = collection(db, 'courses');
       const docs = await getDocs(collectionName);
-      const studentsData = [];
+      const coursesData = [];
       docs.forEach((doc) => {
-        studentsData.push({
+        console.log(doc.data());
+        coursesData.push({
           id: doc.id,
           ...doc.data(),
         });
       });
-      setStudents(studentsData);
+      setCourses(coursesData);
     } catch (error) {
-      console.error('Error fetching students data:', error);
+      console.error('Error fetching courses data:', error);
     }
   };
 
-  const handleDelete = async (studentId) => {
+  const handleDelete = async (courseId) => {
     try {
-      const studentDoc = doc(db, 'students', studentId);
-      await deleteDoc(studentDoc);
+      const courseDoc = doc(db, 'courses', courseId);
+      await deleteDoc(courseDoc);
       fetchDocs(); // Refresh the data after deletion
-      console.log('Student Data deleted successfully');
+      console.log('Course Data deleted successfully');
     } catch (error) {
-      console.error('Error deleting student:', error);
+      console.error('Error deleting course:', error);
     }
   };
 
-  const handleUpdate = async (studentId, updatedData) => {
+  const handleUpdate = async (courseId, updatedData) => {
     try {
       let updatedName = prompt('Enter updated name:', updatedData.name);
-      let updatedContact = prompt('Enter updated contact info:', updatedData.contactInfo);
-      let updatedStudentId = prompt('Enter updated student ID:', updatedData.studentId);
+      let updatedDescription = prompt('Enter updated description:', updatedData.description);
+      let updatedCode = prompt('Enter updated code:', updatedData.code);
 
-      const studentDoc = doc(db, 'students', studentId);
-      await updateDoc(studentDoc, {
+      const courseDoc = doc(db, 'courses', courseId);
+      await updateDoc(courseDoc, {
         name: updatedName || updatedData.name, // Use updated value or existing value
-        contactInfo: updatedContact || updatedData.contactInfo,
-        studentId: updatedStudentId || updatedData.studentId,
+        contactInfo: updatedDescription || updatedData.description,
+        studentId: updatedCode || updatedData.code,
       });
       fetchDocs(); // Refresh the data after update
-      console.log('Student Data updated successfully');
+      console.log('Course Data updated successfully');
     } catch (error) {
-      console.error('Error updating student:', error);
+      console.error('Error updating course:', error);
     }
   };
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Student Data</h2>
+      <h2 className="text-2xl font-bold mb-4">Course Data</h2>
       <button
         onClick={fetchDocs}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
@@ -70,31 +71,31 @@ function StudentsData() {
         <table className="table-auto">
           <thead>
             <tr>
-              <th className="px-4 py-2">Student ID</th>
-              <th className="px-4 py-2">Name</th>
-              <th className="px-4 py-2">Contact Information</th>
+              <th className="px-4 py-2">Course Code</th>
+              <th className="px-4 py-2">Course Name</th>
+              <th className="px-4 py-2">Description</th>
               <th className="px-4 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {students.map((student) => (
-              <tr key={student.id}>
-                <td className="border px-4 py-2">{student.studentId}</td>
-                <td className="border px-4 py-2">{student.name}</td>
-                <td className="border px-4 py-2">{student.contactInfo}</td>
+            {courses.map((course) => (
+              <tr key={course.id}>
+                <td className="border px-4 py-2">{course.studentId}</td>
+                <td className="border px-4 py-2">{course.name}</td>
+                <td className="border px-4 py-2">{course.contactInfo}</td>
                 <td className="border px-4 py-2">
                   <button
-                    onClick={() => handleDelete(student.id)}
+                    onClick={() => handleDelete(course.id)}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mr-2"
                   >
                     Delete
                   </button>
                   <button
                     onClick={() =>
-                      handleUpdate(student.id, {
-                        name: student.name,
-                        contactInfo: student.contactInfo,
-                        studentId: student.studentId,
+                      handleUpdate(course.id, {
+                        name: course.name,
+                        description: course.description,
+                        code: course.code,
                       })
                     }
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
@@ -111,4 +112,4 @@ function StudentsData() {
   );
 }
 
-export default StudentsData;
+export default CourseData;
