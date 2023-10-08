@@ -52,7 +52,7 @@ function StudentRegistration() {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="w-full max-w-3xl flex justify-center rounded-md shadow-md">
-        <div className="bg-white p-6 w-full md:w-2/3 lg:w-1/2">
+        <div className="bg-cyan-200 p-6 w-full md:w-2/3 lg:w-1/2">
           <h2 className="text-2xl font-bold mb-4 text-center">Student Registration</h2>
           <form onSubmit={handleSubmit(onSubmit)} className="w-full">
             <div className="mb-4">
@@ -161,7 +161,7 @@ function StudentRegistration() {
             <div className="mt-4">
               <button
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+                className="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full"
               >
                 Register
               </button>

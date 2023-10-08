@@ -98,16 +98,16 @@ function AdminPanel() {
   }, [students, courses]);
 
   return (
-    <div className="flex bg-zinc-100">
-      <aside className="w-1/6 my-6">
+    <div className="flex bg-blue-300 h-screen">
+      <aside className="w-1/6  my-6">
         <div className="float-right mr-4 ">
           {navBar.map((card, index) => {
             return <AdminPanelCards card={card} key={index} />;
           })}
         </div>
       </aside>
-      <div className="w-10/12 my-6 bg-white">
-        <section className="flex justify-between shadow-md divide-x-2 rounded bg-white py-9 my-5">
+      <div className="w-10/12 my-6 bg-cyan-200 h-fit">
+        <section className="flex justify-between shadow-md divide-x-2 rounded bg-cyan-300 py-9 my-5">
           <div className="flex w-1/3 justify-between px-5">
             <img
               src="https://logowik.com/content/uploads/images/student5651.jpg"
@@ -138,8 +138,8 @@ function AdminPanel() {
             </div>
           </div>
         </section>
-        <div className="my-5 mx-5">
-          <canvas id="myChart" ref={chartRef}></canvas>
+        <div className=" mx-5">
+          <canvas id="myChart" ref={chartRef} width="250" height="100"></canvas>
         </div>
       </div>
     </div>

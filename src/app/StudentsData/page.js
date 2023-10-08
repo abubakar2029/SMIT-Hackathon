@@ -59,17 +59,17 @@ function StudentsData() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 h-screen">
       <h2 className="text-2xl font-bold mb-4">Student Data</h2>
       <button
         onClick={fetchDocs}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+        className="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-4"
       >
         Fetch Data
       </button>
       <Link
         href='/StudentRegistration'
-        className="bg-blue-500 ml-6 hover:bg-blue-700 text-white font-bold py-2.5 px-2 rounded mb-4"
+        className="bg-blue-400 hover:bg-blue-600 ml-6 text-white font-bold py-2.5 px-2 rounded mb-4"
       >
         Add a New Student
       </Link>

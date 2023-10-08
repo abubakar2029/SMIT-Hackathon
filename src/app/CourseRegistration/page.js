@@ -27,7 +27,7 @@ function StudentRegistration() {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="w-full max-w-3xl flex justify-center rounded-md shadow-md">
-        <div className="bg-white p-6 w-full md:w-2/3 lg:w-1/2">
+        <div className="bg-cyan-200 p-6 w-full md:w-2/3 lg:w-1/2">
           <h2 className="text-2xl font-bold mb-4 text-center">Course Registration</h2>
           <form onSubmit={handleSubmit(onSubmit)} className="w-full">
             <div className="mb-4">
@@ -106,7 +106,7 @@ function StudentRegistration() {
             <div className="mt-4">
               <button
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+                className="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full"
               >
                 Register
               </button>
@@ -115,7 +115,8 @@ function StudentRegistration() {
         </div>
         <div className=" lg:block lg:w-1/2">
           <img
-            src="https://plus.unsplash.com/premium_photo-1664110691109-6558cb5ea476?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNjaG9vbHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
+            src="https://images.unsplash.com/photo-1592188657297-c6473609e988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3R1ZGVudHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
+            // src="https://plus.unsplash.com/premium_photo-1664110691109-6558cb5ea476?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNjaG9vbHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
             alt="Student Registration"
             className="w-full h-full object-cover"
           />
