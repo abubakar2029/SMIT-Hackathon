@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import Link from 'next/link';
 
 function StudentsData() {
   const [students, setStudents] = useState([]);
@@ -66,6 +67,12 @@ function StudentsData() {
       >
         Fetch Data
       </button>
+      <Link
+        href='/StudentRegistration'
+        className="bg-blue-500 ml-6 hover:bg-blue-700 text-white font-bold py-2.5 px-2 rounded mb-4"
+      >
+        Add a New Student
+      </Link>
       <div className="overflow-x-auto">
         <table className="table-auto">
           <thead>
@@ -73,6 +80,7 @@ function StudentsData() {
               <th className="px-4 py-2">Student ID</th>
               <th className="px-4 py-2">Name</th>
               <th className="px-4 py-2">Contact Information</th>
+              <th className="px-4 py-2">Course</th>
               <th className="px-4 py-2">Actions</th>
             </tr>
           </thead>
@@ -82,6 +90,7 @@ function StudentsData() {
                 <td className="border px-4 py-2">{student.studentId}</td>
                 <td className="border px-4 py-2">{student.name}</td>
                 <td className="border px-4 py-2">{student.contactInfo}</td>
+                <td className="border px-4 py-2">{student.course}</td>
                 <td className="border px-4 py-2">
                   <button
                     onClick={() => handleDelete(student.id)}

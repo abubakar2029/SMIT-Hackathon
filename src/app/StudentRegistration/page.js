@@ -1,9 +1,11 @@
 "use client"
-import { useForm, Controller } from 'react-hook-form';
-import { collection, addDoc } from 'firebase/firestore';
+import React, { useState, useEffect } from 'react';
+import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { useForm, Controller } from 'react-hook-form';
 
 function StudentRegistration() {
+  const [courses, setCourses] = useState([]);
   const {
     handleSubmit,
     control,
@@ -11,7 +13,31 @@ function StudentRegistration() {
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
+  const fetchCourses = async () => {
+    try {
+      const coursesCollection = collection(db, 'courses');
+      const coursesQuery = query(coursesCollection);
+      const coursesSnapshot = await getDocs(coursesQuery);
+
+      const coursesData = [];
+      coursesSnapshot.forEach((doc) => {
+        coursesData.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+      setCourses(coursesData);
+    } catch (error) {
+      console.error('Error fetching courses:', error);
+    }
+  };
+
   const onSubmit = async (data) => {
+    console.log(data);
     try {
       // Add the student data to the Firestore "students" collection
       const docRef = await addDoc(collection(db, 'students'), data);
@@ -55,18 +81,17 @@ function StudentRegistration() {
             </div>
             <div className="mb-4">
               <label htmlFor="studentId" className="block text-gray-700 text-sm font-bold mb-2">
-                Student ID:
+                Student CNIC:
               </label>
               <Controller
-                name="studentId"
+                name="studentCNIC"
                 control={control}
-                defaultValue=""
-                rules={{ required: 'Student ID is required' }}
+                rules={{ required: 'Student CNIC is required' }}
                 render={({ field }) => (
                   <input
                     {...field}
                     type="text"
-                    id="studentId"
+                    id="studentCNIC"
                     className={`border rounded-md p-2 w-full ${
                       errors.studentId ? 'border-red-500' : 'border-gray-300'
                     }`}
@@ -101,6 +126,38 @@ function StudentRegistration() {
                 <span className="text-red-500 text-sm mt-1">{errors.contactInfo.message}</span>
               )}
             </div>
+            <div className="mb-4">
+              <label htmlFor="course" className="block text-gray-700 text-sm font-bold mb-2">
+                Select Course:
+              </label>
+              <Controller
+                name="course"
+                control={control}
+                defaultValue=""
+                rules={{ required: 'Course selection is required' }}
+                render={({ field }) => (
+                  <select
+                    {...field}
+                    id="course"
+                    className={`border rounded-md p-2 w-full ${
+                      errors.course ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                  >
+                    <option value="" disabled>
+                      Available Courses
+                    </option>
+                    {courses.map((course) => (
+                      <option key={course.id} value={course.id}>
+                        {course.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              />
+              {errors.course && (
+                <span className="text-red-500 text-sm mt-1">{errors.course.message}</span>
+              )}
+            </div>
             <div className="mt-4">
               <button
                 type="submit"
@@ -111,7 +168,7 @@ function StudentRegistration() {
             </div>
           </form>
         </div>
-        <div className=" lg:block lg:w-1/2">
+        <div className="lg:block lg:w-1/2">
           <img
             src="https://plus.unsplash.com/premium_photo-1664110691109-6558cb5ea476?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNjaG9vbHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
             alt="Student Registration"
@@ -124,5 +181,3 @@ function StudentRegistration() {
 }
 
 export default StudentRegistration;
-
-// https://plus.unsplash.com/premium_photo-1664110691109-6558cb5ea476?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNjaG9vbHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60

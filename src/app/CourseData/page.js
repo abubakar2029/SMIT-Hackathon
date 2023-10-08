@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import Link from 'next/link';
 
 function CourseData() {
   const [courses, setCourses] = useState([]);
@@ -67,6 +68,12 @@ function CourseData() {
       >
         Fetch Data
       </button>
+      <Link
+        href='/CourseRegistration'
+        className="bg-blue-500 ml-6 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded mb-4"
+      >
+        Create Course
+      </Link>
       <div className="overflow-x-auto">
         <table className="table-auto">
           <thead>
@@ -80,9 +87,9 @@ function CourseData() {
           <tbody>
             {courses.map((course) => (
               <tr key={course.id}>
-                <td className="border px-4 py-2">{course.studentId}</td>
+                <td className="border px-4 py-2">{course.courseCode}</td>
                 <td className="border px-4 py-2">{course.name}</td>
-                <td className="border px-4 py-2">{course.contactInfo}</td>
+                <td className="border px-4 py-2">{course.description}</td>
                 <td className="border px-4 py-2">
                   <button
                     onClick={() => handleDelete(course.id)}

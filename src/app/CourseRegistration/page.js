@@ -12,6 +12,7 @@ function StudentRegistration() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    console.log(data);
     try {
       // Add the student data to the Firestore "students" collection
       const docRef = await addDoc(collection(db, 'courses'), data);
@@ -58,7 +59,7 @@ function StudentRegistration() {
                 Course Code:
               </label>
               <Controller
-                name="studentId"
+                name="courseCode"
                 control={control}
                 defaultValue=""
                 rules={{ required: 'Student ID is required' }}
@@ -66,9 +67,9 @@ function StudentRegistration() {
                   <input
                     {...field}
                     type="text"
-                    id="studentId"
+                    id="courseCode"
                     className={`border rounded-md p-2 w-full ${
-                      errors.studentId ? 'border-red-500' : 'border-gray-300'
+                      errors.courseCode ? 'border-red-500' : 'border-gray-300'
                     }`}
                   />
                 )}
@@ -82,7 +83,7 @@ function StudentRegistration() {
                 Description:
               </label>
               <Controller
-                name="contactInfo"
+                name="description"
                 control={control}
                 defaultValue=""
                 rules={{ required: 'Contact Information is required' }}
@@ -91,9 +92,9 @@ function StudentRegistration() {
                   rows="6"
                     {...field}
                     type="text"
-                    id="contactInfo"
+                    id="description"
                     className={`border rounded-md p-2 w-full ${
-                      errors.contactInfo ? 'border-red-500' : 'border-gray-300'
+                      errors.description ? 'border-red-500' : 'border-gray-300'
                     }`}
                   />
                 )}
